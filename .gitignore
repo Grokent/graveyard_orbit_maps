@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+tools/dotnet/
+tools/BepInEx/
+tools/*.zip
+release/
+loader/bin/
+loader/obj/

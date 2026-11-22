@@ -1,0 +1,183 @@
+{
+  "id": "ufo_cow",
+  "displayName": "COW ABDUCTION",
+  "description": "A saucer holds a very confused cow in its tractor beam. Four gold-capped entrances lead into a black maze under a purple-and-pink shell.",
+  "map": "maps/ufo_cow.json",
+  "cellCount": 50221,
+  "sealedLayers": false,
+  "startingMoney": 4000,
+  "glyphCount": 120,
+  "greenCount": 64,
+  "bands": [
+    {
+      "layer": 1,
+      "outerFrac": 1.0,
+      "hpSealed": 15,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 3,
+      "lightning": 1,
+      "voidTiles": 1,
+      "swarm": 1,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 2,
+      "outerFrac": 1.0,
+      "hpSealed": 25,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 8,
+      "lightning": 4,
+      "voidTiles": 4,
+      "swarm": 4,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 3,
+      "outerFrac": 1.0,
+      "hpSealed": 40,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 16,
+      "lightning": 9,
+      "voidTiles": 9,
+      "swarm": 9,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 4,
+      "outerFrac": 1.0,
+      "hpSealed": 60,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 8,
+      "lightning": 4,
+      "voidTiles": 4,
+      "swarm": 4,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 5,
+      "outerFrac": 1.0,
+      "hpSealed": 85,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 14,
+      "lightning": 8,
+      "voidTiles": 8,
+      "swarm": 8,
+      "unsealedLook": 0
+    }
+  ],
+  "artifactCells": [
+    [
+      -16,
+      12
+    ],
+    [
+      -12,
+      0
+    ],
+    [
+      99,
+      -155
+    ],
+    [
+      -102,
+      108
+    ],
+    [
+      24,
+      -47
+    ],
+    [
+      -40,
+      -63
+    ],
+    [
+      -32,
+      -104
+    ],
+    [
+      -119,
+      161
+    ],
+    [
+      29,
+      -83
+    ],
+    [
+      67,
+      -61
+    ],
+    [
+      74,
+      -61
+    ],
+    [
+      -8,
+      66
+    ],
+    [
+      -104,
+      88
+    ],
+    [
+      -37,
+      122
+    ],
+    [
+      40,
+      -55
+    ],
+    [
+      82,
+      -92
+    ],
+    [
+      108,
+      -73
+    ],
+    [
+      -5,
+      57
+    ],
+    [
+      -66,
+      107
+    ],
+    [
+      -35,
+      -1
+    ]
+  ],
+  "entrances": [
+    [
+      -117,
+      166
+    ],
+    [
+      -93,
+      166
+    ],
+    [
+      -61,
+      166
+    ],
+    [
+      -38,
+      166
+    ]
+  ]
+}
