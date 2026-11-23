@@ -9,14 +9,17 @@ using UnityEngine;
 namespace GraveyardOrbit.UfoCow
 {
     /// <summary>
-    /// Loads maps/ufo_cow.json + contracts/ufo_cow.contract.json from the plugin
-    /// folder and inserts COW ABDUCTION into the live StructureCatalog.
+    /// Loads every map/contract pair listed in <see cref="MapIds"/> from the
+    /// plugin folder and inserts the missing ones into the live
+    /// StructureCatalog. Ships COW ABDUCTION and BATTLE MOON.
     /// </summary>
     internal static class UfoCowInject
     {
         internal static bool Done { get; private set; }
 
-        private static bool _errorLogged;
+        private static readonly string[] MapIds = { "ufo_cow", "battle_moon" };
+
+        private static readonly HashSet<string> _errorLogged = new HashSet<string>();
 
         internal static void EnsureInjected()
         {
@@ -25,22 +28,32 @@ namespace GraveyardOrbit.UfoCow
             StructureCatalog catalog = StructureCatalog.I;
             if (catalog == null) return;
 
-            if (Has(catalog.campaign) || Has(catalog.ladder))
+            foreach (string id in MapIds)
             {
-                Done = true;
-                return;
+                if (Has(catalog.campaign, id) || Has(catalog.ladder, id)) continue;
+                InjectOne(catalog, id);
             }
 
+            bool all = true;
+            foreach (string id in MapIds)
+            {
+                if (!Has(catalog.campaign, id) && !Has(catalog.ladder, id)) all = false;
+            }
+            Done = all;
+        }
+
+        private static void InjectOne(StructureCatalog catalog, string id)
+        {
             string dir = Path.GetDirectoryName(typeof(UfoCowPlugin).Assembly.Location);
-            string mapPath = Path.Combine(dir ?? ".", "maps", "ufo_cow.json");
-            string contractPath = Path.Combine(dir ?? ".", "contracts", "ufo_cow.contract.json");
+            string mapPath = Path.Combine(dir ?? ".", "maps", id + ".json");
+            string contractPath = Path.Combine(dir ?? ".", "contracts", id + ".contract.json");
             if (!File.Exists(mapPath) || !File.Exists(contractPath))
             {
-                if (!_errorLogged)
+                if (_errorLogged.Add(id))
                 {
-                    _errorLogged = true;
                     UfoCowPlugin.Log.LogError(
-                        "[ufocow] missing data. Expected:\n  " + mapPath + "\n  " + contractPath);
+                        "[ufocow] missing data for '" + id + "'. Expected:\n  "
+                        + mapPath + "\n  " + contractPath);
                 }
                 return;
             }
@@ -89,7 +102,7 @@ namespace GraveyardOrbit.UfoCow
             if (contractCount != check.count)
             {
                 UfoCowPlugin.Log.LogWarning(
-                    $"[ufocow] contract cellCount {contractCount} != map count {check.count}; using {check.count}");
+                    $"[ufocow] '{id}' contract cellCount {contractCount} != map count {check.count}; using {check.count}");
             }
 
             catalog.campaign = Prepend(catalog.campaign, def);
@@ -101,17 +114,16 @@ namespace GraveyardOrbit.UfoCow
                 cache[def.id] = def;
             }
 
-            Done = true;
             UfoCowPlugin.Log.LogInfo(
                 $"[ufocow] injected '{def.id}' ({check.count:N0} cells, {def.bands.Length} bands)");
         }
 
-        private static bool Has(StructureDef[] list)
+        private static bool Has(StructureDef[] list, string id)
         {
             if (list == null) return false;
             foreach (StructureDef d in list)
             {
-                if (d != null && d.id == "ufo_cow") return true;
+                if (d != null && d.id == id) return true;
             }
             return false;
         }

@@ -6,11 +6,11 @@ using System;
 
 namespace GraveyardOrbit.UfoCow
 {
-    [BepInPlugin(PluginGuid, "Graveyard Orbit — COW ABDUCTION", PluginVersion)]
+    [BepInPlugin(PluginGuid, "Graveyard Orbit — Custom Maps", PluginVersion)]
     public sealed class UfoCowPlugin : BaseUnityPlugin
     {
         public const string PluginGuid = "agentbox.graveyardorbit.ufocow";
-        public const string PluginVersion = "0.1.0";
+        public const string PluginVersion = "0.2.0";
 
         internal static ManualLogSource Log;
         private Harmony _harmony;

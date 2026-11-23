@@ -1,0 +1,211 @@
+{
+  "id": "battle_moon",
+  "displayName": "BATTLE MOON",
+  "description": "A planet-killer battlestation seen from below-right: black panel grout and open bays around a wide equatorial trench, a superlaser dish north of the equator and left of centre, and eight panelled hull sectors. Two gold-capped trench mouths are the only openings.",
+  "map": "maps/battle_moon.json",
+  "cellCount": 59819,
+  "sealedLayers": false,
+  "startingMoney": 1000,
+  "glyphCount": 140,
+  "greenCount": 96,
+  "bands": [
+    {
+      "layer": 1,
+      "outerFrac": 1.0,
+      "hpSealed": 15,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 4,
+      "lightning": 1,
+      "voidTiles": 1,
+      "swarm": 1,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 2,
+      "outerFrac": 1.0,
+      "hpSealed": 25,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 10,
+      "lightning": 5,
+      "voidTiles": 5,
+      "swarm": 5,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 3,
+      "outerFrac": 1.0,
+      "hpSealed": 40,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 19,
+      "lightning": 11,
+      "voidTiles": 11,
+      "swarm": 11,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 4,
+      "outerFrac": 1.0,
+      "hpSealed": 60,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 10,
+      "lightning": 5,
+      "voidTiles": 5,
+      "swarm": 5,
+      "unsealedLook": 0
+    },
+    {
+      "layer": 5,
+      "outerFrac": 1.0,
+      "hpSealed": 85,
+      "special1": 0,
+      "special2": 0,
+      "special3": 0,
+      "meta1": 0,
+      "explosive": 17,
+      "lightning": 10,
+      "voidTiles": 10,
+      "swarm": 10,
+      "unsealedLook": 0
+    }
+  ],
+  "artifactCells": [
+    [
+      -19,
+      -71
+    ],
+    [
+      23,
+      66
+    ],
+    [
+      22,
+      67
+    ],
+    [
+      5,
+      77
+    ],
+    [
+      84,
+      52
+    ],
+    [
+      -38,
+      38
+    ],
+    [
+      87,
+      25
+    ],
+    [
+      51,
+      -62
+    ],
+    [
+      25,
+      -112
+    ],
+    [
+      -102,
+      128
+    ],
+    [
+      -41,
+      58
+    ],
+    [
+      -40,
+      41
+    ],
+    [
+      -37,
+      41
+    ],
+    [
+      -29,
+      -7
+    ],
+    [
+      92,
+      17
+    ],
+    [
+      51,
+      -5
+    ],
+    [
+      32,
+      -75
+    ],
+    [
+      -90,
+      66
+    ],
+    [
+      113,
+      -79
+    ],
+    [
+      -138,
+      95
+    ],
+    [
+      103,
+      -113
+    ],
+    [
+      117,
+      -90
+    ],
+    [
+      -98,
+      102
+    ],
+    [
+      98,
+      17
+    ],
+    [
+      -13,
+      -35
+    ],
+    [
+      25,
+      10
+    ],
+    [
+      -72,
+      100
+    ],
+    [
+      53,
+      65
+    ],
+    [
+      82,
+      17
+    ]
+  ],
+  "entrances": [
+    [
+      -138,
+      0
+    ],
+    [
+      138,
+      0
+    ]
+  ]
+}

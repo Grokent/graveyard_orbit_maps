@@ -1,10 +1,20 @@
-GRAVEYARD ORBIT MAPS — COW ABDUCTION (0.1.0)
-===========================================
+GRAVEYARD ORBIT MAPS — BATTLE MOON + COW ABDUCTION (0.2.0)
+=========================================================
 
 WHAT THIS IS
-  An original custom contract/map for Graveyard Orbit: a UFO beaming up a cow,
-  built from 50,221 hex cells. This package includes BepInEx, a small loader
-  plugin and the map; no compiler or separate mod loader is needed.
+  Two original custom contracts for Graveyard Orbit, built from hex cells:
+
+  BATTLE MOON (59,819 cells)
+    A planet-killer battlestation seen in 3/4 view from below-right. Black
+    panel grout and open bays (31.9% of the map) surround a wide equatorial
+    trench. A superlaser dish sits north of the equator and left of centre.
+
+  COW ABDUCTION (50,221 cells)
+    A saucer/dome UFO tractor-beaming a cow, with four gold-capped entrances
+    and a 3-wide black maze.
+
+  This package includes BepInEx, a small loader plugin and both maps; no
+  compiler or separate mod loader is needed.
 
 DISCLAIMER
   This project is 100% vibe coded and 100% the product of AI use. It is an
@@ -21,7 +31,7 @@ INSTALL (SAME ON WINDOWS AND LINUX)
   2. In Steam, right-click Graveyard Orbit > Manage > Browse local files.
      That opens the game folder (the one containing GraveyardOrbit.exe).
   3. Download the release zip:
-       https://github.com/Grokent/graveyard_orbit_maps/releases/latest/download/GraveyardOrbit-UfoCow-0.1.0.zip
+       https://github.com/Grokent/graveyard_orbit_maps/releases/latest/download/GraveyardOrbit-Maps-0.2.0.zip
   4. Extract EVERYTHING from this zip into the game folder that opened in
      step 2. It only adds files; no original game file is replaced or
      modified:
@@ -37,11 +47,25 @@ INSTALL (SAME ON WINDOWS AND LINUX)
   6. Launch the game through Steam.
 
 PLAY
-  New Game > COW ABDUCTION (first in the contract list).
-  - Four gold-capped entrances at the leg bottoms lead into a 3-wide black
-    maze. The south is gold/blue and easy; the north is purple/pink and hard.
-  - 24 hidden rooms, 20 artifacts (power-up rolls), 120 glyphs (beacons for
-    2 players x 20 relics), 64 salvage crates, 298 mod-material veins.
+  New Game > BATTLE MOON or COW ABDUCTION (both appear at the top of the
+  contract list). Start a NEW contract after updating; continuing an old save
+  keeps its destroyed-cell history.
+
+  BATTLE MOON
+    The ship approaches from the planet side (bottom of the map). The black
+    trench runs across the equator; the dish is above it, left of centre.
+    Follow the black grout between hull panels or breach straight through.
+    - 31.9% black: panel grout, open panel bays, and a 2,889-cell trench.
+    - 32 hidden rooms, 29 artifacts (power-up rolls), 140 glyphs (beacons for
+      2 players x 20 relics), 96 salvage crates, 399 material veins.
+    - $1000 starting money.
+
+  COW ABDUCTION
+    The ship starts on the planet side of the cow.
+    - Four gold-capped entrances at the leg bottoms lead into a 3-wide black
+      maze. The south is gold/blue and easy; the north is purple/pink and hard.
+    - 24 hidden rooms, 20 artifacts, 120 glyphs, 64 salvage crates, 298
+      material veins.
 
 UNINSTALL
   Delete BepInEx/plugins/GraveyardOrbit.UfoCow/
@@ -52,6 +76,8 @@ FILES
   BepInEx/plugins/GraveyardOrbit.UfoCow/GraveyardOrbit.UfoCow.dll
   BepInEx/plugins/GraveyardOrbit.UfoCow/maps/ufo_cow.json
   BepInEx/plugins/GraveyardOrbit.UfoCow/contracts/ufo_cow.contract.json
+  BepInEx/plugins/GraveyardOrbit.UfoCow/maps/battle_moon.json
+  BepInEx/plugins/GraveyardOrbit.UfoCow/contracts/battle_moon.contract.json
 
 NOTE
   BepInEx injects through winhttp.dll. Some antivirus tools may flag it as a

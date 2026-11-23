@@ -3,10 +3,10 @@
 # payload: extract the zip into the Graveyard Orbit game folder.
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-VERSION="0.1.0"
+VERSION="0.2.0"
 OUT="$ROOT/release"
 STAGE="$OUT/stage"
-ZIP="$OUT/GraveyardOrbit-UfoCow-$VERSION.zip"
+ZIP="$OUT/GraveyardOrbit-Maps-$VERSION.zip"
 DLL="$ROOT/loader/bin/Release/GraveyardOrbit.UfoCow.dll"
 BEP_ZIP="$ROOT/tools/BepInEx_win_x64_5.4.23.6.zip"
 
@@ -19,8 +19,10 @@ mkdir -p "$STAGE/BepInEx/plugins/GraveyardOrbit.UfoCow/contracts"
 unzip -oq "$BEP_ZIP" -d "$STAGE"
 
 cp -f "$DLL" "$STAGE/BepInEx/plugins/GraveyardOrbit.UfoCow/"
-cp -f "$ROOT/maps/ufo_cow.json" "$STAGE/BepInEx/plugins/GraveyardOrbit.UfoCow/maps/"
-cp -f "$ROOT/contracts/ufo_cow.contract.json" "$STAGE/BepInEx/plugins/GraveyardOrbit.UfoCow/contracts/"
+for id in ufo_cow battle_moon; do
+  cp -f "$ROOT/maps/$id.json" "$STAGE/BepInEx/plugins/GraveyardOrbit.UfoCow/maps/"
+  cp -f "$ROOT/contracts/$id.contract.json" "$STAGE/BepInEx/plugins/GraveyardOrbit.UfoCow/contracts/"
+done
 
 cp -f "$ROOT/INSTALL.txt" "$STAGE/INSTALL.txt"
 cp -f "$ROOT/README.md" "$STAGE/README.md"
