@@ -313,6 +313,8 @@ time. The short version:
   entrance caps, gradient, 25–35% black, room/pickup budgets.
 - Deploy, restart, and start a **new** contract; continuing an old save keeps
   its destroyed cells. Never `Resources.Load` from plugin `Awake`.
+- See the BATTLE MOON section below for projection, panel-grid and publishing
+  notes from the second map.
 
 ## Validation rules (`validate_map.py`)
 
@@ -371,6 +373,127 @@ Key values from `contracts/ufo_cow.contract.json`: `sealedLayers = false`,
 - The project is pure data generation: no game DLLs, no decompiled code, no
   redistributed Anchorhead assets.
 - Never commit the installed game folder, logs, saves or decompiled output.
+
+## BATTLE MOON lessons (suggestions, not rules)
+
+Notes from building the second contract. These are heuristics from one map, not
+rules. The data-model sections above still apply to both maps.
+
+### Start with the projection, not the outline
+
+- A sphere's orthographic silhouette is a circle from every camera angle, so an
+  ellipse will not sell a 3/4 view. Foreshortened features and converging
+  meridians do. Back-project each disc cell onto a unit sphere and evaluate
+  features in latitude/longitude; curved trenches, elliptical dishes and polar
+  convergence then come for free.
+- Worth doing before writing the generator: a ~20-line projection script to
+  print where the dish, poles and equator land for a few camera angles. It
+  saved several regenerate-and-look cycles.
+- A camera basis that worked: `fwd = sph(lat_c, lon_c)`,
+  `right = normalize(cross(up_world, fwd))`, `up = cross(fwd, right)`, then for
+  a disc point `u,v`: `p = u·right + v·up + sqrt(1-u²-v²)·fwd`,
+  `lat = asin(p.y)`, `lon = atan2(p.x, p.z)`.
+- Cell count is roughly the silhouette area in pixel units. `R = 138` at
+  `scale = 1.0` gave 59,819 cells; `πR²` is a good first guess before tuning.
+
+### Dead ends we hit
+
+- **Radial 45° wedges for “8 sectors × 3 rings”.** A 45° wedge from the centre
+  lies entirely in one hemisphere, so a sector can never have both a south and
+  a north sample; a per-sector gradient check cannot pass. Meridian/longitude
+  bands (curved strips) span the full height and make the sector × ring grid
+  work.
+- **Screen-space block hashing on a projected sphere.** 20-pixel blocks looked
+  like rectangular camo. Latitude/longitude-keyed plates follow the surface.
+  Align the plate grid with the sector/ring grid, or the palette changes inside
+  a plate.
+- **A northern dish + a low camera + “left of centre and not too high”.** These
+  pull against each other: a northern feature seen from below lands near the
+  top limb and is heavily foreshortened. Pick which constraint matters, or put
+  the dish on the visible hemisphere. Run the numbers before committing.
+- **Long BFS docking shafts from the south rim to an equatorial trench on a
+  maze-free map.** They read as two big diagonal corridors — exactly the
+  labyrinth the design was avoiding. If the trench already reaches two limbs,
+  two mouths may be enough; extra entrances are not automatically better.
+- **Chasing isolated black specks at the poles.** Grout converges at the limb
+  and sheds tiny components. Rather than special-casing the gap width near the
+  pole, BFS the layer-1 cells and repaint every component except the main one
+  to the palette. One pass, and the single-component check holds.
+- **Reusing one constant for two dish bands.** Using `DISH_RIM_IN` as both the
+  basin end and the rim start left no rim at all. Explicit, named bands (core,
+  core ring, basin, rim, halo) are easier to keep correct and to validate.
+- **A 2D hard-coded dish centre in the validator.** When the camera or scale
+  moves, a fixed `(x, y)` check lies. Storing the dish at lat/lon and testing
+  angular distance is sturdier; inferring the map radius from `bounds` lets the
+  checker follow `--scale`.
+
+### Black as structure
+
+- On a 10° × 11.25° plate grid, a 1.1° joint is roughly 3 cells wide and about
+  a fifth of the surface. With open bays and a wide trench that landed at 31.9%.
+  Joint width is the strongest black knob; it is worth using before adding
+  more open bays.
+- Grout cells are easier to keep connected to the trench if they are laid
+  before the trench lips; otherwise the gold lip walls the grid off.
+- A trench noticeably wider than the grout (2.2° vs 0.55° half-width worked)
+  reads as the main channel instead of one more seam.
+- One solid layer per panel is easier to read than per-cell variation. Picking
+  the layer from a panel-keyed hash keeps a plate coherent.
+- 8% fully open plus 8% half-open panels gave a good “some interiors are open”
+  read. Whole panels merge with the grout as large bays, which is fine; many
+  adjacent open panels start to look like a second trench.
+- Without a maze, the 25–35% black band no longer applies. The non-layer-1
+  reference shares also have to be renormalised: a gold underside can push L4
+  well above the reference 11%, so decide whether that is the intended look
+  rather than fighting the histogram.
+
+### Rooms and pickups on a gridded hull
+
+- Once grout is everywhere, “distance from the trench” is not enough. Rooms
+  need distance from *all* layer-1 cells or they open at start and fail the
+  validator. A BFS from the black set (`black_dist >= 3`) still left room for
+  32 rooms of 7–19 cells in panel centres.
+- Greens, specials and rooms are easier to keep valid if they exclude all black
+  space, not just the trench. Generating gaps after excluding the dish stops
+  the grid from cutting across it.
+- Panel openings change the effective layer mix; re-check the histogram after
+  each tuning pass instead of assuming the palette weights are the result.
+
+### Validation and workflow
+
+- When the design changes, change the checks with it. The old 25–35% black and
+  “no layer 1 outside the trench” checks were both wrong for a grouted hull;
+  keeping them would have blocked a correct map. Checks that match the new
+  intent (30–36% black, ≥55% of black is grout/trench) were more useful.
+- The trench meets the limb tangentially, so the first black cell can be 4–5
+  hex steps behind the cap. A fixed 2-hop entrance check fails; a small BFS
+  radius (5) or a connectivity test from the cap is more honest.
+- Reusing the generator's projection constants in the validator, and inferring
+  scale from the map bounds, keeps a `--scale` change from silently breaking
+  the dish and ring checks.
+- `md5sum` the map and contract, regenerate, and compare before deploying. It
+  catches accidental non-determinism (set iteration, unseeded choices).
+- Render the preview after every palette change. Two look-see cycles caught
+  more than the numeric checks did.
+- Preview labels and docs go stale fast; updating them in the same pass as the
+  design change saves the next session from trusting the wrong description.
+- The old 3-wide erosion check no longer describes a grouted hull; it is fine
+  to drop a check when the design it encoded is gone, rather than widening it
+  until it passes.
+
+### Deployment and publishing
+
+- The contract `entrances` array is design/validator metadata; the loader does
+  not set a spawn field from it. The game approaches from maximum `r`, so two
+  limb mouths can be correct even when four entrances felt nicer on paper.
+- Bump the plugin version and the release zip name together, and make the
+  README's `releases/latest/download/...` filename match the uploaded asset
+  exactly. `gh release view` is a quick confirmation.
+- The loader injects from `MainMenuController.BuildUI`, so a game restart is
+  enough and both maps appear at the top of New Game. Old saves keep their
+  destroyed cells; a new contract is the way to see a regenerated map.
+- The log prefix is still `[ufocow]` even though the plugin now injects both
+  maps; `grep ufocow BepInEx/LogOutput.log` remains the quick check.
 
 ## Provenance
 
